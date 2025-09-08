@@ -1,0 +1,48 @@
+name: foodorder
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_dotenv: ^6.0.0
+  flutter_riverpod: ^2.6.1
+  http: ^1.5.0
+  intl: ^0.20.2
+  json_annotation: ^4.9.0
+
+    
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.7.0
+  json_serializable: ^6.11.0
+  riverpod_lint: ^2.6.5
+  custom_lint: ^0.7.6
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - .env
+    - assets/images/
+
+  fonts:
+    - family: BreeSerif
+      fonts:
+      - asset: assets/fonts/bree-serif/BreeSerif-Regular.ttf
+
+    - family: LilitaOne
+      fonts:
+      - asset: assets/fonts/Lilita_One/LilitaOne-Regular.ttf
+
+    - family: Asap
+      fonts:
+      - asset: assets/fonts/asap/Asap-Regular.ttf
