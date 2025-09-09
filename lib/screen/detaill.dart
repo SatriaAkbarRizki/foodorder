@@ -46,10 +46,12 @@ class DetaillScreen extends ConsumerWidget {
                     child: Image.network(
                       '${RepoFood.url}/assets/images/${kategoriFoodModel.image}',
                       fit: BoxFit.cover,
-                      height: 230,
+                      height: 180,
+                      width: 200,
                     ),
                   ),
                 ),
+                SizedBox(),
                 Text(
                   "Kategori ${kategoriFoodModel.nama}",
                   style: Theme.of(
@@ -82,12 +84,13 @@ class DetaillScreen extends ConsumerWidget {
                       onPressed: () async {
                         final orderFood = OrderModel(
                           id: null,
-                          name: controller.selectKategori.isNotEmpty
+                          nama: controller.selectKategori.isNotEmpty
                               ? controller.selectKategori
                               : controller.listKategori.first,
                           jumlah: jumlah,
                           kategoriMakanan: kategoriFoodModel.id,
                           totalHarga: controller.totalHarga,
+                          image: null,
                         );
 
                         try {
@@ -127,7 +130,7 @@ class DetaillScreen extends ConsumerWidget {
                         "Pesan Sekarang",
                         style: Theme.of(
                           context,
-                        ).textTheme.titleSmall?.copyWith(fontSize: 16),
+                        ).textTheme.titleSmall?.copyWith(fontSize: 14),
                       ),
                     ),
                   ],

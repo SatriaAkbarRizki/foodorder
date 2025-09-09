@@ -25,4 +25,13 @@ class RepoFood {
     log(respons.statusCode.toString());
     return respons;
   }
+
+  Future<List<OrderModel>> getListOrder() async {
+    final respons = await http.get(Uri.parse("$url/makanan/"));
+
+    List<dynamic> listOrder = jsonDecode(respons.body);
+    return listOrder.map((e) => OrderModel.fromJson(e)).toList();
+  }
+
+  
 }

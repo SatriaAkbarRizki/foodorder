@@ -25,7 +25,7 @@ class FoodWidgetHome extends StatelessWidget {
                     child: Image.network(
                       '${RepoFood.url}/assets/images/${dataHomeProvider.image}',
                       fit: BoxFit.contain,
-                      height: 250,
+                      width: 150,
                     ),
                   ),
                 ),
@@ -67,21 +67,10 @@ class FoodWidgetHome extends StatelessWidget {
                           .formatCurrency(dataHomeProvider.harga),
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () {},
-                    //   style: ElevatedButton.styleFrom(
-                    //     shape: ContinuousRectangleBorder(
-                    //       borderRadius: BorderRadiusGeometry.all(
-                    //         Radius.circular(50),
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   child: Text("Simpan"),
-                    // ),
                   ],
                 ),
               ),
-
+              // Spacer(),
               Spacer(),
               ElevatedButton(
                 onPressed: () {
@@ -105,7 +94,7 @@ class FoodWidgetHome extends StatelessWidget {
                   "Pesan Sekarang",
                   style: Theme.of(
                     context,
-                  ).textTheme.titleSmall?.copyWith(fontSize: 16),
+                  ).textTheme.titleSmall?.copyWith(fontSize: 14),
                 ),
               ),
             ],

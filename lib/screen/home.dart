@@ -60,7 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         padding: const EdgeInsets.all(10),
         child: Consumer(
           builder: (context, ref, child) {
-            final dataKategori = ref.watch(getFoodKategoriProvider);
+            final dataKategori = ref.watch(listFoodKategoriProvider);
 
             return Center(
               child: dataKategori.when(
@@ -84,16 +84,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   onTap: () => ref
                                       .read(homeProvider.notifier)
                                       .selectUserImage(data[index]),
-                                  child: Hero(
-                                    tag: 'foodimagges-${data[index].id}',
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
-                                      child: Image.network(
-                                        '${RepoFood.url}/assets/images/${data[index].image}',
-                                        fit: BoxFit.cover,
-                                        height: 80,
-                                        width: 80,
-                                      ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.network(
+                                      '${RepoFood.url}/assets/images/${data[index].image}',
+                                      fit: BoxFit.cover,
+                                      height: 80,
+                                      width: 80,
                                     ),
                                   ),
                                 ),

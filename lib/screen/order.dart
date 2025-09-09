@@ -1,10 +1,17 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class OrderScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foodorder/repository/food.dart';
+import 'package:foodorder/riverpod/network/food.dart';
+
+class OrderScreen extends ConsumerWidget {
   const OrderScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dataOrderProvider = ref.watch(lististOrderFoodProvider);
+
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -12,58 +19,77 @@ class OrderScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/images/bakso.png',
-                      fit: BoxFit.cover,
-                      height: 80,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "title",
-                          style: Theme.of(context).textTheme.bodySmall,
+        child: Center(
+          child: dataOrderProvider.when(
+            data: (data) => ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) => Card(
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.network(
+                          '${RepoFood.url}/assets/images/${data[index].image}',
+                          fit: BoxFit.contain,
+                          height: 80,
                         ),
-                        Text(
-                          'Jumlah: 99',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            data[index].nama,
 
-                    Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Total',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.labelSmall?.copyWith(fontSize: 12),
-                        ),
-                        Text(
-                          'Rp 999999',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.labelSmall?.copyWith(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ],
+                            maxLines: 2,
+                            softWrap: true,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          Text(
+                            'Jumlah: ${data[index].jumlah}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+
+                      Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total',
+                            style: Theme.of(
+                              context,
+                            ).textTheme.labelSmall?.copyWith(fontSize: 12),
+                          ),
+                          Text(
+                            ref.read(
+                              convertFormatHargaProvider(
+                                data[index].totalHarga,
+                              ),
+                            ),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.labelSmall?.copyWith(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ],
+
+            error: (error, stackTrace) {
+              log(error.toString());
+              return Text("Ada yang bermasalah ini");
+            },
+            loading: () => CircularProgressIndicator(color: Color(0xffcbfe01)),
+          ),
         ),
       ),
     );
