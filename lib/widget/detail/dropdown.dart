@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,13 +5,14 @@ import 'package:foodorder/model/kategori.dart';
 import 'package:foodorder/riverpod/detail/details_provider..dart';
 
 class DropdownWidgetDetail extends StatelessWidget {
-  KategoriFoodModel kategoriFoodModel;
-  DropdownWidgetDetail({super.key, required this.kategoriFoodModel});
+  final KategoriFoodModel kategoriFoodModel;
+  const DropdownWidgetDetail({super.key, required this.kategoriFoodModel});
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
+        final provider = ref.watch(detailsProvider);
         final providerDetails = ref.watch(detailsProvider.notifier);
         providerDetails.sortData(kategoriFoodModel.subkategori);
 
@@ -51,6 +51,7 @@ class DropdownWidgetDetail extends StatelessWidget {
 
               // ],
               onChanged: (value) {
+      
                 providerDetails.setKategori(value ?? "");
               },
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
