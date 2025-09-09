@@ -5,19 +5,21 @@ part 'order.g.dart';
 @JsonSerializable(includeIfNull: false)
 class OrderModel {
   int? id;
-  String name;
+  String nama;
   int jumlah;
-  @JsonKey(name:  "kategori")
+  @JsonKey(name: "kategori_makanan")
   int kategoriMakanan;
   @JsonKey(name: 'total_harga')
   int totalHarga;
+  String? image;
 
   OrderModel({
     required this.id,
-    required this.name,
+    required this.nama,
     required this.jumlah,
     required this.kategoriMakanan,
     required this.totalHarga,
+    required this.image,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>
