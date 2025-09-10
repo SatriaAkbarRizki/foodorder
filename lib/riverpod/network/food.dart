@@ -16,7 +16,7 @@ final createOrderProvider = FutureProvider.autoDispose
       (ref, arg) async => await ref.watch(foodProvider).insertOrder(arg),
     );
 
-final lististOrderFoodProvider = FutureProvider.autoDispose<List<OrderModel>>(
+final lististOrderFoodProvider = FutureProvider<List<OrderModel>>(
   (ref) async => await ref.watch(foodProvider).getListOrder(),
 );
 

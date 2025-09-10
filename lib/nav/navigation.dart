@@ -2,21 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodorder/riverpod/navbar_riverpod.dart';
 
+
 class NavBar extends ConsumerWidget {
-  NavBar({super.key});
+  const NavBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isNavvisible = ref.watch(navVisibilityProvider);
-    final pageIndexNotifier = ref.watch(indexNavProvider.notifier).returnPage();
+    final isNavVisible = ref.watch(navVisibilityProvider);
+    final currentIndex = ref.watch(indexNavProvider);
+
     return Scaffold(
-      body: pageIndexNotifier,
+      body: IndexedStack(
+        index: currentIndex,
+        
+        children: ref.watch(indexNavProvider.notifier).listWIdget,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AnimatedSlide(
         duration: const Duration(milliseconds: 300),
-        offset: isNavvisible ? const Offset(0, 0) : const Offset(0, 2),
+        offset: isNavVisible ? const Offset(0, 0) : const Offset(0, 2),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: BottomNavigationBar(
@@ -24,8 +30,7 @@ class NavBar extends ConsumerWidget {
               backgroundColor: Colors.white,
               selectedItemColor: Colors.black,
               unselectedItemColor: Colors.grey,
-              currentIndex: ref.watch(indexNavProvider),
-
+              currentIndex: currentIndex,
               onTap: (value) {
                 ref.read(indexNavProvider.notifier).changePage(value);
               },
