@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodorder/riverpod/navbar_riverpod.dart';
 
-
 class NavBar extends ConsumerWidget {
   const NavBar({super.key});
 
@@ -14,7 +13,7 @@ class NavBar extends ConsumerWidget {
     return Scaffold(
       body: IndexedStack(
         index: currentIndex,
-        
+
         children: ref.watch(indexNavProvider.notifier).listWIdget,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

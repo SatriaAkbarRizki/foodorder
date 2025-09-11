@@ -27,15 +27,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void _onScroll() {
     final isVisible = ref.read(navVisibilityProvider.notifier);
+    final currentOffset = _scrollController.offset;
 
     if (_scrollController.position.userScrollDirection ==
         ScrollDirection.reverse) {
-      // Hide navbar
       if (ref.read(navVisibilityProvider)) isVisible.state = false;
     } else if (_scrollController.position.userScrollDirection ==
         ScrollDirection.forward) {
-      // Show navbar
-      if (!ref.read(navVisibilityProvider)) isVisible.state = true;
+      if (!ref.read(navVisibilityProvider) && currentOffset > 50) {
+        isVisible.state = true;
+      }
     }
   }
 
