@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodorder/repository/food.dart';
 import 'package:foodorder/riverpod/navbar_riverpod.dart';
 import 'package:foodorder/riverpod/network/food.dart';
+import 'package:foodorder/riverpod/order/scrollorder.dart';
 
 class OrderScreen extends ConsumerWidget {
   const OrderScreen({super.key});
@@ -13,6 +14,7 @@ class OrderScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var dataOrderProvider = ref.watch(lististOrderFoodProvider);
     final isOrder = ref.watch(indexNavProvider);
+    final scrollNotifier = ref.watch(scrollProvider('order').notifier);
 
     if (isOrder == 1) {
       dataOrderProvider = ref.refresh(lististOrderFoodProvider);
@@ -29,6 +31,7 @@ class OrderScreen extends ConsumerWidget {
           child: dataOrderProvider.when(
             data: (data) => data.isNotEmpty
                 ? ListView.builder(
+                    controller: scrollNotifier.scrollController,
                     itemCount: data.length,
                     itemBuilder: (context, index) => Card(
                       elevation: 5,
@@ -51,7 +54,6 @@ class OrderScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   data[index].nama,
-
                                   maxLines: 2,
                                   softWrap: true,
                                   style: Theme.of(context).textTheme.bodySmall,
@@ -62,8 +64,7 @@ class OrderScreen extends ConsumerWidget {
                                 ),
                               ],
                             ),
-
-                            Spacer(),
+                            const Spacer(),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -88,13 +89,13 @@ class OrderScreen extends ConsumerWidget {
                       ),
                     ),
                   )
-                : Text('Orderan Kosong, Silahkan Pesan dulu'),
-
+                : const Text('Orderan Kosong, Silahkan Pesan dulu'),
             error: (error, stackTrace) {
               log(error.toString());
-              return Text("Ada yang bermasalah ini");
+              return const Text("Ada yang bermasalah ini");
             },
-            loading: () => CircularProgressIndicator(color: Color(0xffcbfe01)),
+            loading: () =>
+                CircularProgressIndicator(color: const Color(0xffcbfe01)),
           ),
         ),
       ),
