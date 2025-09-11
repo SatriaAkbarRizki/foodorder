@@ -41,13 +41,17 @@ class DetaillScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      '${RepoFood.url}/assets/images/${kategoriFoodModel.image}',
-                      fit: BoxFit.cover,
-                      height: 180,
-                      width: 200,
+                  child: Hero(
+                    tag: 'foodimages',
+
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(
+                        '${RepoFood.url}/assets/images/${kategoriFoodModel.image}',
+                        fit: BoxFit.cover,
+                        height: 180,
+                        width: 200,
+                      ),
                     ),
                   ),
                 ),

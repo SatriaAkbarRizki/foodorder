@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 class RepoFood {
   static final url = dotenv.get('URLAPINGROK');
 
+  
+
   Future<List<KategoriFoodModel>> getAllKategori() async {
     final respons = await http.get(Uri.parse("$url/makanan/kategori"));
     List<dynamic> listKategori = jsonDecode(respons.body);

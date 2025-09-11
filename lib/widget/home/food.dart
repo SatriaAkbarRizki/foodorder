@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foodorder/repository/food.dart';
 import 'package:foodorder/riverpod/home/home_provider.dart';
 import 'package:foodorder/screen/detaill.dart';
+import 'package:foodorder/widget/animated/describe.dart';
+import 'package:foodorder/widget/animated/foodimage.dart';
 
 class FoodWidgetHome extends StatelessWidget {
   const FoodWidgetHome({super.key});
@@ -12,33 +14,26 @@ class FoodWidgetHome extends StatelessWidget {
     return Consumer(
       builder: (context, ref, child) {
         final dataHomeProvider = ref.watch(homeProvider);
+
         return Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
                 alignment: Alignment.topCenter,
-                child: Hero(
-                  tag: 'foodimagges-${dataHomeProvider.id}',
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      '${RepoFood.url}/assets/images/${dataHomeProvider.image}',
-                      fit: BoxFit.contain,
-                      width: 150,
-                    ),
-                  ),
-                ),
+                child: AutoAnimatedImage(imageUrl: dataHomeProvider.image),
               ),
+              const SizedBox(height: 5),
               Text(
                 dataHomeProvider.nama,
                 style: Theme.of(context).textTheme.titleSmall,
               ),
+              const SizedBox(height: 5),
               SizedBox(
                 height: 50,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5, // Always 5 stars
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     return Icon(
                       Icons.star,
@@ -49,28 +44,8 @@ class FoodWidgetHome extends StatelessWidget {
                   },
                 ),
               ),
-              Text(
-                dataHomeProvider.deskripsi,
-                textAlign: TextAlign.justify,
-                maxLines: 5,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
 
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      ref
-                          .read(homeProvider.notifier)
-                          .formatCurrency(dataHomeProvider.harga),
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                  ],
-                ),
-              ),
-              // Spacer(),
+              AutoAnimatedDescribe(describe: dataHomeProvider.deskripsi),
               Spacer(),
               ElevatedButton(
                 onPressed: () {
@@ -83,12 +58,12 @@ class FoodWidgetHome extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 45),
-                  shape: ContinuousRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.all(Radius.circular(50)),
+                  minimumSize: const Size(double.infinity, 45),
+                  shape: const ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                   foregroundColor: Colors.black,
-                  backgroundColor: Color(0xffcbfe01),
+                  backgroundColor: const Color(0xffcbfe01),
                 ),
                 child: Text(
                   "Pesan Sekarang",
