@@ -25,11 +25,14 @@ class AutoAnimatedImage extends StatelessWidget {
       child: ClipRRect(
         key: ValueKey(imageUrl),
         borderRadius: BorderRadius.circular(borderRadius),
-        child: Image.network(
-          '${RepoFood.url}/assets/images/$imageUrl',
-          fit: fit,
-          width: size,
-          height: size,
+        child: Hero(
+                     tag: 'foodimages',
+          child: Image.network(
+            '${RepoFood.url}/assets/images/$imageUrl',
+            fit: fit,
+            width: size,
+            height: size,
+          ),
         ),
       ),
     );
