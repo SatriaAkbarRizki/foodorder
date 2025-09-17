@@ -7,6 +7,7 @@ import 'package:foodorder/model/order.dart';
 import 'package:foodorder/repository/food.dart';
 import 'package:foodorder/riverpod/detail/details_provider..dart';
 import 'package:foodorder/riverpod/network/food.dart';
+import 'package:foodorder/screen/pembayaran.dart';
 import 'package:foodorder/widget/detail/dropdown.dart';
 import 'package:foodorder/widget/detail/jumlahstok.dart';
 import 'package:foodorder/widget/snackbar.dart';
@@ -94,34 +95,41 @@ class DetaillScreen extends ConsumerWidget {
                           jumlah: jumlah,
                           kategoriMakanan: kategoriFoodModel.id,
                           totalHarga: controller.totalHarga,
-                          image: null,
+                          image: kategoriFoodModel.image,
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PembayaranScreen(orderModel: orderFood),
+                          ),
                         );
 
-                        try {
-                          final response = await ref.refresh(
-                            createOrderProvider(orderFood).future,
-                          );
+                        // try {
+                        //   final response = await ref.refresh(
+                        //     createOrderProvider(orderFood).future,
+                        //   );
 
-                          if (response.statusCode == 200 && context.mounted) {
-                            context.showSnackBarMessage(
-                              'Pesan sedang dibuat',
-                              StatusSnackBar.succes,
-                            );
+                        //   if (response.statusCode == 200 && context.mounted) {
+                        //     context.showSnackBarMessage(
+                        //       'Pesan sedang dibuat',
+                        //       StatusSnackBar.succes,
+                        //     );
 
-                            ref.invalidate(detailsProvider);
-                            Navigator.pop(context);
-                          } else {
-                            log('Failed: ${response.statusCode}');
-                          }
-                        } catch (e) {
-                          log('Error: $e');
-                          if (context.mounted) {
-                            context.showSnackBarMessage(
-                              e.toString(),
-                              StatusSnackBar.error,
-                            );
-                          }
-                        }
+                        //     ref.invalidate(detailsProvider);
+                        //     Navigator.pop(context);
+                        //   } else {
+                        //     log('Failed: ${response.statusCode}');
+                        //   }
+                        // } catch (e) {
+                        //   log('Error: $e');
+                        //   if (context.mounted) {
+                        //     context.showSnackBarMessage(
+                        //       e.toString(),
+                        //       StatusSnackBar.error,
+                        //     );
+                        //   }
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const ContinuousRectangleBorder(

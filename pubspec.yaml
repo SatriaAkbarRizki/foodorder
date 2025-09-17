@@ -33,6 +33,7 @@ flutter:
   assets:
     - .env
     - assets/images/
+    - assets/logo/
 
   fonts:
     - family: BreeSerif
